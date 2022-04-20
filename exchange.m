@@ -13,7 +13,6 @@ yen_rate = 9.75;
 yuan_arr = [1 5 10 20 50 100];
 yuan_rate = 193.89;
 
-
 dol = calcBill(kor, dol_arr, dol_rate)
 eur = calcBill(kor, eur_arr, eur_rate)
 yen = calcBill(kor, yen_arr, yen_rate)
