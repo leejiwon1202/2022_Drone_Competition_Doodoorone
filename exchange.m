@@ -13,27 +13,29 @@ yen_rate = 9.75;
 yuan_arr = [1 5 10 20 50 100];
 yuan_rate = 193.89;
 
-
-dol = calcBill(kor, dol_arr, dol_rate);
-eur = calcBill(kor, eur_arr, eur_rate);
-yen = calcBill(kor, yen_arr, yen_rate);
-yuan = calcBill(kor, yuan_arr, yuan_rate);
-
-
-sprintf("한국 돈 %d원 환전 결과", kor)
-sprintf("%d달러 / %d유로 / %d엔 / %d위안", dol, eur, yen, yuan)
+dol = calcBill(kor, dol_arr, dol_rate)
+eur = calcBill(kor, eur_arr, eur_rate)
+yen = calcBill(kor, yen_arr, yen_rate)
+yuan = calcBill(kor, yuan_arr, yuan_rate)
 
 
-function cnt = calcBill(kor, bill_arr, ex_rate)
-    bill_arr = sort(bill_arr, 'desc');
-    remain = fix(kor/ex_rate);
-    cnt = 0;
-
-    for bill = bill_arr 
-        if remain >= bill
-            num = fix(remain/bill);
-            cnt = cnt + num;
-            remain = remain - num * bill;
+function c = calcBill(kor, bill_arr, ex_rate)
+    money = fix(kor / ex_rate);
+    dp = zeros(1,money);
+    for i = 2:money
+        dp(i) = 99999;
+    end
+    if bill_arr(1) ~= 1
+        for z = 1:bill_arr(1)
+            dp(z) = 0;
         end
     end
+
+    for i = 1:length(bill_arr)
+        for j = bill_arr(i):money
+            dp(j) = min(dp(j), dp(j - bill_arr(i)+1) + 1);
+        end
+    end
+
+    c = dp(money);
 end
