@@ -1,7 +1,3 @@
-clc;
-clear all;
-close all;
-
 % 1단계: 이미지를 읽어들임
 img = imread('문제1.png');
 
