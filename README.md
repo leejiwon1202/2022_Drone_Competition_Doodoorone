@@ -288,15 +288,9 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 >     findGreenDot = true;
 > ```
 > ### 3. detecting == true인 경우 드론을 표식 방향으로 이동
-> ```matlab
-> if (detecting)
->     g_lst = [sum(sum(fill_img(1:fix(end/4*3), 1:end)))
->             sum(sum(fill_img(fix(end/4):end, 1:end)))
->             sum(sum(fill_img(1:end, 1:fix(end/4*3))))
->             sum(sum(fill_img(1:end, fix(end/4):end)))];
-> ``` 
+> 
 > 1단계와 동일하게 상하/좌우 비율 비교 후 초록색 픽셀이 더 많은 쪽으로 드론 이동
-> <img src="image/p2_7.png" width="700" height="250"/>
+
 ## [3단계]
 ### ● 드론의 높낮이 조절
 천막이 안보이는 경우를 대비해, 드론의 현재 높이(height)가 0.75보다 낮을 경우 위로 이동
