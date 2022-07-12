@@ -12,7 +12,7 @@
     - **`3단계에서 안보이는 경우`:** 드론과 천막의 높이차가 커서 안보이는 경우에 대비해, 드론의 **현재 높이를 누적계산**해 높낮이 이동
 
 * **3단계 각도 조절 전략**
-    - 2단계 통과 후 3단계 표식까지의 최적의 경로를 설정하기 위해 각도를 **10도 씩** 돌리며 **최적의 각도** 탐색.
+    - 2단계 통과 후 3단계 표식까지의 최적의 경로를 설정하기 위해 각도를 **10도씩** 돌리며 **최적의 각도** 탐색.
 
     - 드론과 천막 간의 각도가 **0도**일 때가 최적의 각도이며, 이때의 천막 **픽셀 수가 가장 많이 검출**되므로 이를 이용해 각도를 제어한다.
 
@@ -219,26 +219,30 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > > ```
 > > 
 > > ii) 그렇지 않은 경우 파란색 픽셀이 많은 쪽으로 상하/좌우 이동
-> > 
+> >
+> > >  **`- 비율이 [~ 0.3]`:** 크게 이동(0.5m)
+> > >
+> > > **`- 비율이 [0.3 ~ 0.7]`:** 작게 이동(0.25m)
 > > <img src="image/p2_5.png" width="700" height="250"/>
 > > 
 > > ```matlab
-> > if ratio1 < 0.7
-> >   if B_lst(1) >= B_lst(2) 
-> >     moveup(droneObj,'Distance', Rdist_udlr,'WaitUntilDone', true);
-> >     height = height + Rdist_udlr;
-> >   else
-> >     movedown(droneObj,'Distance', Rdist_udlr,'WaitUntilDone', true);
-> >     height = height - Rdist_udlr;
-> >   end
-> > end
-> >  
-> > if ratio2 < 0.7
-> >   if B_lst(3) >= B_lst(4)
-> >     moveleft(droneObj,'Distance', Rdist_udlr,'WaitUntilDone', true);
-> >   else
-> >     moveright(droneObj,'Distance', Rdist_udlr,'WaitUntilDone', true);
-> >   end
+> > % 상하 이동 코드. (좌우 코드도 동일 방식)
+> > if ratio1 < 0.3
+> >     if B_lst(1) >= B_lst(2)
+> >         moveup(droneObj,'Distance', Rdist_udlr * 2,'WaitUntilDone', true);
+> >         height = height + Rdist_udlr * 2
+> >     else
+> >         movedown(droneObj,'Distance', Rdist_udlr * 2,'WaitUntilDone', true);
+> >         height = height - Rdist_udlr * 2
+> >     end
+> > elseif ratio1 < 0.7
+> >     if B_lst(1) >= B_lst(2)
+> >         moveup(droneObj,'Distance', Rdist_udlr,'WaitUntilDone', true);
+> >         height = height + Rdist_udlr
+> >     else
+> >         movedown(droneObj,'Distance', Rdist_udlr,'WaitUntilDone', true);
+> >         height = height - Rdist_udlr
+> >     end
 > > end
 > > ```
 ### ● 초록색 표식을 기준으로 드론의 위치를 제어하는 반복문
@@ -248,11 +252,11 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > frame = rgb2hsv(frame);
 > 
 > h = frame(:,:,1); detect_h = (h >= 0.2) & (h <=0.42);
-> s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.6);
+> s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.65);
 > 
 > detect_Gdot = detect_h & detect_s;
 >
-> canny_img = edge(detect_Gdot, 'Canny', 0.9, 9);
+> canny_img = edge(detect_Gdot, 'Canny', 0.9, 8);
 > 
 > fill_img = imfill(canny_img, 'holes');
 > ```
@@ -298,13 +302,13 @@ end
 <img src="image/p2_8.png" width="350" height="250"/>
 
 ### ● 최적 각도 탐색
-천막을 탐색하기 위해, 2단계 통과 후 90° 회전한 상태에서 10°씩 총 80°를 회전하며 비교.
+2단계 통과 후 120° 회전한 상태에서 10°씩 150°까지 회전하면서 각도 비교.
 
 파란색 천막의 픽셀을 가장 많이 검출한 각도가 최적의 각도가 됨.
 ```matlab
 % 10도씩 회전하며 탐색
 max_sum = 0;
-for index=1:8   
+for index=1:4
     if index > 1
         turn(droneObj, deg2rad(10));
     end
@@ -324,9 +328,9 @@ end
 ```
 ```matlab
 % 최적 각도
-turn_radi = (-1) * 10 * (8 - max_index);    
+turn_radi = (-1) * 10 * (4 - max_index);
 turn(droneObj, deg2rad(turn_radi));
-moveforward(droneObj, 'Distance', 0.7, 'WaitUntilDone', true);
+moveforward(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
 ```
 <img src="image/p2_9.png" width="650" height="450"/>
 
