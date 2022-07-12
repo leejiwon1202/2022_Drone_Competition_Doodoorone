@@ -162,9 +162,8 @@ while(~findRightPos)
 end
 
 findGreenDot = false;
+moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
 while(~findGreenDot)
-    moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
-
     frame = snapshot(cam);
     frame = rgb2hsv(frame);
     h = frame(:,:,1); detect_h = (h >= 0.2) & (h <=0.42);
@@ -189,8 +188,8 @@ while(~findGreenDot)
     if (detecting)
         g_lst = [sum(sum(fill_img(1:fix(end/4*3), 1:end)))
                  sum(sum(fill_img(fix(end/4):end, 1:end)))
-                 sum(sum(fill_img(1:end, 1:fix(end/4*3))))
-                 sum(sum(fill_img(1:end, fix(end/4):end)))];
+                 sum(sum(fill_img(1:end, 1:fix(end/3*2))))
+                 sum(sum(fill_img(1:end, fix(end/3):end)))];
         if abs(g_lst(1) - g_lst(2)) > 100
             if g_lst(1) >= g_lst(2)
                 moveup(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
@@ -207,6 +206,10 @@ while(~findGreenDot)
                 moveright(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
             end
         end
+    end
+    
+    if (~findGreenDot)
+        moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
     end
 end
 
