@@ -20,9 +20,8 @@ moveup(droneObj,'Distance', 0.3,'WaitUntilDone', true);
 moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 
 findRedDot = false;
+moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
 while(~findRedDot)
-    moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
-
     frame = snapshot(cam);
     r = frame(:,:,1);   detect_r = (r > 90) & (r < 200);
     g = frame(:,:,2);   detect_g = (g < 55);
@@ -68,6 +67,10 @@ while(~findRedDot)
                 moveright(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
             end
         end
+    end
+    
+    if (~findRedDot)
+        moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
     end
 end
 
