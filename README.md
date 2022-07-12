@@ -3,11 +3,13 @@
 
     - 1,2,3단계 모두 표식의 **픽셀 수**를 이용해 표식과 드론 사이 거리를 조절한다.
 
-    - 1,2,3단계 모두 좌우상하 각 범위 내의 **픽셀 수 비율**을 이용해 드론의 좌우상하 위치를 조절한다.
+    - 1,2,3단계 모두 상하좌우 각 범위 내의 **픽셀 수 비율**을 이용해 드론의 상하좌우 위치를 조절한다.
 
     - 2,3단계에서 **천막의 상하좌우 비율**을 맞춘 뒤에 **표식을 탐색**하는 전략으로 정확한 위치조절이 가능하다.
 
 * **링 검출을 위한 드론 이동 전략:**
+    - 천막의 상하/좌우 **픽셀 수 비율이 비슷하도록** 드론을 이동시켰다.
+
     - 2,3단계에서 천막에 너무 가까우면 **후진** 후 다시 탐색하는 전략을 이용했다. 
     
     - 천막이 한 쪽에만 치우쳐있어 픽셀 수 비율이 너무 작으면 **크게 이동**, 적당히 작으면 **작게 이동**하는 방식으로 정확성과 속도를 높혔다.
@@ -45,20 +47,20 @@ takeoff(droneObj);
 ```
 
 ## [1단계]
-### ● 드론의 높이와 원의 중심을 일치
+### ⦁ 드론의 높이와 원의 중심을 일치
 원의 중심 높이(1m) - 드론 이륙 기본 높이(0.7m) = 추가 상승 (0.3m)
 ```matlab
 moveup(droneObj,'Distance', 0.3,'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_1.png" width="600" height="300"/></p>
 
-### ● 실측 거리를 줄임으로써 이동 시간과 오차 감소
+### ⦁ 실측 거리를 줄임으로써 이동 시간과 오차 감소
 ```matlab
 moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_2.png" width="550" height="300"/></p>
 
-### ● 빨간색 표식을 기준으로 드론의 위치를 제어하는 반복문
+### ⦁ 빨간색 표식을 기준으로 드론의 위치를 제어하는 반복문
 > ### 1. 빨간색 표식 픽셀 추출 (RGB)
 > ```matlab
 > frame = snapshot(cam);
@@ -144,7 +146,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > <img src="image/p1_5.png" width="700" height="250"/>
 > 
 ## [2단계]
-### ● 천막 픽셀의 상하좌우 비율을 기준으로 드론의 위치를 제어하는 반복문
+### ⦁ 천막 픽셀의 상하좌우 비율을 기준으로 드론의 위치를 제어하는 반복문
 > ### 1. 파란색 천막 픽셀 추출 (RGB)
 > ```matlab
 > frame = snapshot(cam);
@@ -199,8 +201,8 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 >          sum(sum(detect_Brect(1:end, 1:fix(end/2))))  
 >          sum(sum(detect_Brect(1:end, fix(end/2):end)))];
 >          
-> ratio1 = min(B_lst(1), B_lst(2)) / max(B_lst(1), B_lst(2));
-> ratio2 = min(B_lst(3), B_lst(4)) / max(B_lst(3), B_lst(4));
+> ratio1 = min(B_lst(1), B_lst(2)) / max(B_lst(1), B_lst(2));    % 상하 비율
+> ratio2 = min(B_lst(3), B_lst(4)) / max(B_lst(3), B_lst(4));    % 좌우 비율
 > ```
 > 
 > ### 4. 계산한 비율을 중심으로 드론 이동 제어
@@ -251,7 +253,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > >     end
 > > end
 > > ```
-### ● 초록색 표식을 기준으로 드론의 위치를 제어하는 반복문
+### ⦁ 초록색 표식을 기준으로 드론의 위치를 제어하는 반복문
 > ### 1. 초록색 표식 픽셀 추출 (HSV)
 > ```matlab
 > frame = snapshot(cam);
@@ -292,7 +294,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > 1단계와 동일하게 상하/좌우 비율 비교 후 초록색 픽셀이 더 많은 쪽으로 드론 이동
 
 ## [3단계]
-### ● 드론의 높낮이 조절
+### ⦁ 드론의 높낮이 조절
 천막이 안보이는 경우를 대비해, 드론의 현재 높이(height)가 0.75보다 낮을 경우 위로 이동
 ```matlab
 if height <= 0.75
@@ -301,7 +303,7 @@ end
 ```
 <img src="image/p2_8.png" width="350" height="250"/>
 
-### ● 최적 각도 탐색
+### ⦁ 최적 각도 탐색
 2단계 통과 후 120° 회전한 상태에서 10°씩 150°까지 회전하면서 각도 비교.
 
 파란색 천막의 픽셀을 가장 많이 검출한 각도가 최적의 각도가 됨.
@@ -334,5 +336,5 @@ moveforward(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
 ```
 <img src="image/p2_9.png" width="650" height="450"/>
 
-### ● 천막 및 표식 탐색 코드는 2단계와 동일
+### ⦁ 링 및 표식 탐색 코드는 2단계와 동일
 보라색 표식에서 착지
