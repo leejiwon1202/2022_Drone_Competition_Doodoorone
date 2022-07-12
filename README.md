@@ -19,21 +19,21 @@ takeoff(droneObj);
 ```
 
 # 1단계
-### 드론의 높이와 원의 중심을 일치
+### ● 드론의 높이와 원의 중심을 일치
 원의 중심 높이(1m) - 드론 이륙 기본 높이(0.7m) = 추가 상승 (0.3m)
 ```
 moveup(droneObj,'Distance', 0.3,'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_1.png" width="600" height="300"/></p>
 
-### 실측 거리를 줄임으로써 이동 시간과 오차 감소
+### ● 실측 거리를 줄임으로써 이동 시간과 오차 감소
 ```
 moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_2.png" width="550" height="300"/></p>
 
-### 빨간색 점을 기준으로 드론의 위치를 제어하는 반복문
-> ### 1. 빨간색 점 픽셀 추출 (RGB)
+### ● 빨간색 표식을 기준으로 드론의 위치를 제어하는 반복문
+> ### 1. 빨간색 표식 픽셀 추출 (RGB)
 > ```
 > frame = snapshot(cam);
 > 
@@ -45,8 +45,8 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > ```
 > <img src="image/p1_3.png" width="800" height="300"/>
 > 
-> ### 2. 빨간색 점의 픽셀 합(red_sum)을 기준으로 드론 이동 제어
-> **[0]** 후진 후 다시 빨간색 점 픽셀 추출 코드로 이동
+> ### 2. 빨간색 표식의 픽셀 합(red_sum)을 기준으로 드론 이동 제어
+> **`[0]`:** 후진 후 다시 빨간색 표식 픽셀 추출 코드로 이동
 > 
 > <img src="image/p1_4_1.png" width="300" height="200"/> 
 > 
@@ -56,12 +56,12 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 >   continue;
 > ```
 > 
-> **[0~300]** 위치 이동 없이 직진
+> **`[0~300]`:** 위치 이동 없이 직진
 > 
 > <img src="image/p1_4_2.png" width="300" height="200"/>
 > 
 > 
-> **[300~2000]** detecting 변수 true로 변경
+> **`[300~2000]`:** detecting 변수 true로 변경
 > 
 > <img src="image/p1_4_3.png" width="300" height="200"/>
 > 
@@ -70,7 +70,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 >   detecting = true;
 > ```
 > 
-> **[2000~3000]** 점의 위치가 중앙에 있지 않다면 detecting 변수 true로 변경
+> **`[2000~3000]`:** 표식의 위치가 중앙에 있지 않다면 detecting 변수 true로 변경
 > 
 > <img src="image/p1_4_4.png" width="650" height="250"/>
 > 
@@ -82,7 +82,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 >   end
 > ```
 > 
-> **[3000~]** 90º turn → 1.2m 전진 -> 반복문 탈출
+> **`[3000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
 > 
 > <img src="image/p1_4_5.png" width="300" height="200"/>
 > 
@@ -94,14 +94,14 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > ```
 > 
 >
-> ### 3. detecting == true인 경우 드론을 점 방향으로 이동
+> ### 3. detecting == true인 경우 드론을 표식 방향으로 이동
 > 
 > ```
 > if (detecting)
->   r_lst = [sum(sum(detect_Rdot(1:fix(end/4*3), 1:end)))
->            sum(sum(detect_Rdot(fix(end/4):end, 1:end)))
->            sum(sum(detect_Rdot(1:end, 1:fix(end/3*2))))
->            sum(sum(detect_Rdot(1:end, fix(end/3):end)))];
+>   r_lst = [sum(sum(detect_Rdot(1:fix(end/4*3), 1:end)))   % 상
+>            sum(sum(detect_Rdot(fix(end/4):end, 1:end)))   % 하
+>            sum(sum(detect_Rdot(1:end, 1:fix(end/3*2))))   % 좌
+>            sum(sum(detect_Rdot(1:end, fix(end/3):end)))]; % 우
 > ```
 > 상하 비율 비교 후 빨간색 픽셀이 더 많은 쪽으로 드론 이동 (좌우 비율 또한 동일한 원리로 작동)
 > 
@@ -118,7 +118,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > <img src="image/p1_5.png" width="700" height="250"/>
 > 
 # 2단계
-### 천막 픽셀의 상하좌우 비율을 기준으로 드론의 위치를 제어하는 반복문
+### ● 천막 픽셀의 상하좌우 비율을 기준으로 드론의 위치를 제어하는 반복문
 > ### 1. 파란색 천막 픽셀 추출 (RGB)
 > ```
 > frame = snapshot(cam);
@@ -134,7 +134,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > ### 2. 파란색 천막 픽셀의 합이 100 이하라면 좌우 탐색 후 위치 이동
 > <img src="image/p2_2.png" width="600" height="300"/>
 > 
-> **[1]** 정면 기준 -45º turn → sum1 값 저장
+> **[1]** 정면 기준 -45° turn → sum1 값 저장
 > ```
 > turn(droneObj, deg2rad(-45));
 > frame = snapshot(cam);
@@ -144,7 +144,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > detect_Brect = detect_r & detect_g & detect_b;
 > sum1 = sum(sum(detect_Brect));
 > ```
-> **[2]** 정면 기준 +45º turn → sum2 값 저장
+> **[2]** 정면 기준 +45° turn → sum2 값 저장
 > ```
 > turn(droneObj, deg2rad(90));
 > frame = snapshot(cam);
@@ -154,7 +154,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > detect_Brect = detect_r & detect_g & detect_b;
 > sum2 = sum(sum(detect_Brect));
 > ```
-> **[3]** sum값이 더 큰 으로 0.5m 이동 후 파란색 천막 픽셀 추출 코드로 이동
+> **[3]** sum값이 더 큰 곳으로 0.5m 이동 후 파란색 천막 픽셀 추출 코드로 이동
 > ```
 > turn(droneObj, deg2rad(-45));
 > if sum1 >= sum2
@@ -178,7 +178,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > ```
 > 
 > ### 4. 계산한 비율을 중심으로 드론 이동 제어
-> **[올바른 비율 탐색 성공]** 0.4m 하강 → 0.5m 전진 -> 반복문 탈출
+> **[올바른 비율 탐색 성공]:** 0.4m 하강 → 0.5m 전진 → 반복문 탈출
 > ```
 > if((ratio1 >= 0.7) && (ratio2 >= 0.7))
 >   movedown(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
@@ -188,7 +188,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > ```
 > > **[올바른 비율 탐색 실패]**
 > > 
-> > 현재 파란색 천막에 매우 근접한 상황이라면 후진한 후 위의 과정 반복
+> > i) 현재 파란색 천막에 매우 근접한 상황이라면 후진한 후 위의 과정 반복
 > > 
 > > <img src="image/p2_4.png" width="300" height="200"/>
 > > 
@@ -198,7 +198,7 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > >   moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
 > > ```
 > > 
-> > 그렇지 않은 경우 파란색 픽셀이 많은 쪽으로 상하/좌우 이동
+> > ii) 그렇지 않은 경우 파란색 픽셀이 많은 쪽으로 상하/좌우 이동
 > > 
 > > <img src="image/p2_5.png" width="700" height="250"/>
 > > 
@@ -221,8 +221,8 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > >   end
 > > end
 > > ```
-### 초록색 점을 기준으로 드론의 위치를 제어하는 반복문
-> ### 1. 초록색 점 픽셀 추출 (HSV)
+### ● 초록색 표식을 기준으로 드론의 위치를 제어하는 반복문
+> ### 1. 초록색 표식 픽셀 추출 (HSV)
 > ```
 > frame = snapshot(cam);
 > frame = rgb2hsv(frame);
@@ -238,13 +238,77 @@ moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
 > ```
 > <img src="image/p2_6.png" width="700" height="250"/>
 > 
-> ### 2. 초록색 점의 픽셀 합(green_sum)을 기준으로 드론 이동 제어
-> 어쩌구 저쩌구
-> 
-> ### 3. detecting == true인 경우 드론을 점 방향으로 이동
-> 어쩌구 저쩌구
-> 
+> ### 2. 초록색 표식의 픽셀 합(green_sum)을 기준으로 드론 이동 제어
+> **`[0]`:** 후진 후 다시 초록색 표식 픽셀 추출 코드로 이동
+> ```
+> if green_sum == 0
+>     moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
+>     continue;
+> ```
+> **`[300~2000]`:** detecting 변수 true로 변경
+> ```
+> elseif green_sum >= 300
+>     detecting = true;
+>```
+> **`[2000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
+> ```
+> elseif green_sum >= 2000
+>     turn(droneObj, deg2rad(90));
+>     moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
+>     findGreenDot = true;
+> ```
+> ### 3. detecting == true인 경우 드론을 표식 방향으로 이동
+> ```
+> if (detecting)
+>     g_lst = [sum(sum(fill_img(1:fix(end/4*3), 1:end)))
+>             sum(sum(fill_img(fix(end/4):end, 1:end)))
+>             sum(sum(fill_img(1:end, 1:fix(end/4*3))))
+>             sum(sum(fill_img(1:end, fix(end/4):end)))];
+> ``` 
+> 1단계와 동일하게 상하/좌우 비율 비교 후 초록색 픽셀이 더 많은 쪽으로 드론 이동
+> <img src="image/p2_7.png" width="700" height="250"/>
 # 3단계
-### height가 0.75보다 작은 경우 + 그림
-### 각도 탐색하는거 + 그림
-### 그 아래는 2단계와 동일함 이런 말 예쁘게 넣어주면 좋을듯!!
+### ● 드론의 높낮이 조절
+천막이 안보이는 경우를 대비해, 드론의 현재 높이(height)가 0.75보다 낮을 경우 위로 이동
+```
+if height <= 0.75
+    moveup(droneObj,'Distance', 0.7,'WaitUntilDone', true);
+end
+```
+<img src="image/p2_8.png" width="350" height="250"/>
+
+### ● 최적 각도 탐색
+천막을 탐색하기 위해, 2단계 통과 후 90° 회전한 상태에서 10°씩 총 80°를 회전하며 비교.
+
+파란색 천막의 픽셀을 가장 많이 검출한 각도가 최적의 각도가 됨.
+```
+% 10도씩 회전하며 탐색
+max_sum = 0;
+for index=1:8   
+    if index > 1
+        turn(droneObj, deg2rad(10));
+    end
+
+    frame = snapshot(cam);
+    r = frame(:,:,1);   detect_r = (r < 60);   
+    g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
+    b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
+    detect_Brect = detect_r & detect_g & detect_b;
+    sum_blue = sum(sum(detect_Brect));
+
+    if sum_blue > max_sum
+        max_sum = sum_blue;
+        max_index = index;
+    end
+end
+```
+```
+% 최적 각도
+turn_radi = (-1) * 10 * (8 - max_index);    
+turn(droneObj, deg2rad(turn_radi));
+moveforward(droneObj, 'Distance', 0.7, 'WaitUntilDone', true);
+```
+<img src="image/p2_9.png" width="650" height="450"/>
+
+### ● 천막 및 표식 탐색 코드는 2단계와 동일
+보라색 표식에서 착지
