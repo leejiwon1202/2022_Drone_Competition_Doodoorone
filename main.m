@@ -35,7 +35,7 @@ while(~findGreenDot)
     if green_sum == 0
         moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
         continue;
-    elseif green_sum >= 3000
+    elseif green_sum >= 4000
         turn(droneObj, deg2rad(90));
         moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
         findGreenDot = true;
