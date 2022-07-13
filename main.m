@@ -179,7 +179,7 @@ while(~findPurpleDot)
     elseif purple_sum >= 4000
         turn(droneObj, deg2rad(90));
         moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
-        findGreenDot = true;
+        findPurpleDot = true;
     elseif purple_sum >= 600
         detecting = true;
     end
