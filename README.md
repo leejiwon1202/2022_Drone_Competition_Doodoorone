@@ -50,7 +50,7 @@ takeoff(droneObj);
 ### ⦁ 드론의 높이와 원의 중심을 일치
 원의 중심 높이(1m) - 드론 이륙 기본 높이(0.7m) => 추가 상승 (0.15m)
 ```matlab
-moveup(droneObj,'Distance', 0.15,'WaitUntilDone', true);
+moveup(droneObj,'Distance', 0.3,'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_1.png" width="600" height="300"/></p>
 
