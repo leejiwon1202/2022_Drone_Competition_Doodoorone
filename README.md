@@ -211,12 +211,12 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > ```
 > 
 > ### 4. 계산한 비율을 중심으로 드론 이동 제어
-> **`[올바른 비율 탐색 성공]`:** 0.4m 하강 → 0.5m 전진 → 반복문 탈출
+> **`[올바른 비율 탐색 성공]`:** 0.4m 하강 → 0.8m 전진 → 반복문 탈출
 > ```matlab
 > if((ratio1 >= 0.7) && (ratio2 >= 0.7))
 >   movedown(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
 >   height = height - 0.4
->   moveforward(droneObj, 'Distance', 0.5, 'WaitUntilDone', true);
+>   moveforward(droneObj, 'Distance', 0.8, 'WaitUntilDone', true);
 >   findRightPos = true;
 > ```
 > > **`[올바른 비율 탐색 실패]`:**
