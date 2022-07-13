@@ -1,7 +1,4 @@
 % 0단계
-clear all;
-close all;
-
 dist_forward = 0.3;
 dist_backward = 0.4;
 dist_pass = 1.2;
