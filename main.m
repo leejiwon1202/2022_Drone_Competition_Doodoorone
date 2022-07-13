@@ -81,7 +81,7 @@ end
 findRightPos = false;
 while(~findRightPos)
     frame = snapshot(cam);
-    r = frame(:,:,1);   detect_r = (r < 60);   
+    r = frame(:,:,1);   detect_r = (r < 50);   
     g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
     b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
     detect_Brect = detect_r & detect_g & detect_b;  
@@ -89,7 +89,7 @@ while(~findRightPos)
     if (sum(sum(detect_Brect)) <= 100)
         turn(droneObj, deg2rad(-45));
         frame = snapshot(cam);
-        r = frame(:,:,1);   detect_r = (r < 60);   
+        r = frame(:,:,1);   detect_r = (r < 50);   
         g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
         b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
         detect_Brect = detect_r & detect_g & detect_b;
@@ -97,7 +97,7 @@ while(~findRightPos)
 
         turn(droneObj, deg2rad(90));
         frame = snapshot(cam);
-        r = frame(:,:,1);   detect_r = (r < 60);   
+        r = frame(:,:,1);   detect_r = (r < 50);   
         g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
         b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
         detect_Brect = detect_r & detect_g & detect_b;
@@ -229,7 +229,7 @@ for index=1:4
     end
 
     frame = snapshot(cam);
-    r = frame(:,:,1);   detect_r = (r < 60);   
+    r = frame(:,:,1);   detect_r = (r < 50);   
     g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
     b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
     detect_Brect = detect_r & detect_g & detect_b;
@@ -247,7 +247,7 @@ moveforward(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
 findRightPos = false;
 while(~findRightPos)
     frame = snapshot(cam);
-    r = frame(:,:,1);   detect_r = (r < 60);
+    r = frame(:,:,1);   detect_r = (r < 50);
     g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
     b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
     detect_Brect = detect_r & detect_g & detect_b;
@@ -255,7 +255,7 @@ while(~findRightPos)
     if (sum(sum(detect_Brect)) <= 100)
         turn(droneObj, deg2rad(-45));
         frame = snapshot(cam);
-        r = frame(:,:,1);   detect_r = (r < 60);   
+        r = frame(:,:,1);   detect_r = (r < 50);   
         g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
         b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
         detect_Brect = detect_r & detect_g & detect_b;
@@ -263,7 +263,7 @@ while(~findRightPos)
 
         turn(droneObj, deg2rad(90));
         frame = snapshot(cam);
-        r = frame(:,:,1);   detect_r = (r < 60);   
+        r = frame(:,:,1);   detect_r = (r < 50);   
         g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
         b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
         detect_Brect = detect_r & detect_g & detect_b;
