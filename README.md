@@ -48,15 +48,15 @@ takeoff(droneObj);
 
 ## [1단계]
 ### ⦁ 드론의 높이와 원의 중심을 일치
-원의 중심 높이(1m) - 드론 이륙 기본 높이(0.7m) = 추가 상승 (0.3m)
+원의 중심 높이(1m) - 드론 이륙 기본 높이(0.7m) => 추가 상승 (0.15m)
 ```matlab
-moveup(droneObj,'Distance', 0.3,'WaitUntilDone', true);
+moveup(droneObj,'Distance', 0.15,'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_1.png" width="600" height="300"/></p>
 
 ### ⦁ 실측 거리를 줄임으로써 이동 시간과 오차 감소
 ```matlab
-moveforward(droneObj, 'Distance', 1.5, 'WaitUntilDone', true);
+moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_2.png" width="550" height="300"/></p>
 
