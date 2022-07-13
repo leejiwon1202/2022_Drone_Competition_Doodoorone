@@ -165,7 +165,7 @@ moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
 while(~findPurpleDot)
     frame = snapshot(cam);
     frame = rgb2hsv(frame);
-    h = frame(:,:,1); detect_h = (h >= 0.67) & (h <= 0.8);
+    h = frame(:,:,1); detect_h = (h >= 0.69) & (h <= 0.8);
     s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.7);
     detect_Pdot = detect_h & detect_s;
     canny_img = edge(detect_Pdot, 'Canny', 0.9, 9);
@@ -180,7 +180,7 @@ while(~findPurpleDot)
         turn(droneObj, deg2rad(90));
         moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
         findGreenDot = true;
-    elseif purple_sum >= 300
+    elseif purple_sum >= 600
         detecting = true;
     end
 
