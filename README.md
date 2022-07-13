@@ -264,7 +264,7 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > frame = snapshot(cam);
 > frame = rgb2hsv(frame);
 > 
-> h = frame(:,:,1); detect_h = (h >= 0.67) & (h <= 0.8);
+> h = frame(:,:,1); detect_h = (h >= 0.69) & (h <= 0.8);
 > s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.7);
 > 
 > detect_Pdot = detect_h & detect_s;
