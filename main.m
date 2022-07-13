@@ -173,7 +173,7 @@ while(~findPurpleDot)
     purple_sum = sum(sum(fill_img));
     
     detecting = false;
-    if purple_sum < 50
+    if purple_sum == 0
         moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
         continue;
     elseif purple_sum >= 4000
