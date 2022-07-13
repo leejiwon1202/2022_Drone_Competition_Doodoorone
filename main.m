@@ -29,7 +29,7 @@ while(~findGreenDot)
     green_sum = sum(sum(fill_img));
 
     detecting = false;
-    if green_sum == 0
+    if green_sum < 50
         moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
         continue;
     elseif green_sum >= 4000
@@ -173,7 +173,7 @@ while(~findPurpleDot)
     purple_sum = sum(sum(fill_img));
     
     detecting = false;
-    if purple_sum == 0
+    if purple_sum < 50
         moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
         continue;
     elseif purple_sum >= 4000
@@ -332,7 +332,7 @@ while(~findRedDot)
     red_sum = sum(sum(detect_Rdot));
 
     detecting = false;
-    if red_sum == 0
+    if red_sum < 50
         moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
         continue;
     elseif red_sum >= 4000
