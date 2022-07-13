@@ -156,7 +156,7 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > ```matlab
 > frame = snapshot(cam);
 > 
-> r = frame(:,:,1);   detect_r = (r < 60);   
+> r = frame(:,:,1);   detect_r = (r < 50);   
 > g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
 > b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
 > 
@@ -171,7 +171,7 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > ```matlab
 > turn(droneObj, deg2rad(-45));
 > frame = snapshot(cam);
-> r = frame(:,:,1);   detect_r = (r < 60);   
+> r = frame(:,:,1);   detect_r = (r < 50);   
 > g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
 > b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
 > detect_Brect = detect_r & detect_g & detect_b;
