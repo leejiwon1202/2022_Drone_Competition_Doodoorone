@@ -328,7 +328,7 @@ findRedDot = false;
 moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
 while(~findRedDot)
     frame = snapshot(cam);
-    r = frame(:,:,1);   detect_r = (r > 90) & (r < 200);
+    r = frame(:,:,1);   detect_r = (r > 80) & (r < 200);
     g = frame(:,:,2);   detect_g = (g < 55);
     b = frame(:,:,3);   detect_b = (b < 80);
     detect_Rdot = detect_r & detect_g & detect_b;
