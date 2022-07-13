@@ -346,19 +346,19 @@ while(~findRedDot)
     end
 
     if (detecting)
-        p_lst = [sum(sum(fill_img(1:fix(end/4*3), 1:end)))
-                 sum(sum(fill_img(fix(end/4):end, 1:end)))
-                 sum(sum(fill_img(1:end, 1:fix(end/3*2))))
-                 sum(sum(fill_img(1:end, fix(end/3):end)))];
-        if abs(p_lst(1) - p_lst(2)) > 100
-            if p_lst(1) >= p_lst(2) 
+        r_lst = [sum(sum(detect_Rdot(1:fix(end/4*3), 1:end)))
+                 sum(sum(detect_Rdot(fix(end/4):end, 1:end)))
+                 sum(sum(detect_Rdot(1:end, 1:fix(end/3*2))))
+                 sum(sum(detect_Rdot(1:end, fix(end/3):end)))];
+        if abs(r_lst(1) - r_lst(2)) > 100
+            if r_lst(1) >= r_lst(2) 
                 moveup(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
             else
                 movedown(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
             end
         end
-        if abs(p_lst(3) - p_lst(4)) > 100
-            if p_lst(3) >= p_lst(4)
+        if abs(r_lst(3) - r_lst(4)) > 100
+            if r_lst(3) >= r_lst(4)
                 moveleft(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
             else
                 moveright(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
@@ -366,7 +366,7 @@ while(~findRedDot)
         end
     end
     
-    if (~findPurpleDot)
+    if (~findRedDot)
         moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
     end
 end
