@@ -65,11 +65,16 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > ```matlab
 > frame = snapshot(cam);
 > 
-> r = frame(:,:,1);   detect_r = (r > 90) & (r < 200);
-> g = frame(:,:,2);   detect_g = (g < 55);
-> b = frame(:,:,3);   detect_b = (b < 80);
+> frame = rgb2hsv(frame);
 > 
-> detect_Rdot = detect_r & detect_g & detect_b;
+> h = frame(:,:,1); detect_h = (h >= 0.2) & (h <= 0.42);
+> s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.76);
+> 
+> detect_Gdot = detect_h & detect_s;
+> 
+> canny_img = edge(detect_Gdot, 'Canny', 0.9, 8);
+> 
+> fill_img = imfill(canny_img, 'holes');
 > ```
 > <img src="image/p1_3.png" width="800" height="300"/>
 > 
@@ -98,7 +103,7 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 >   detecting = true;
 > ```
 > 
-> **`[2000~3000]`:** 표식의 위치가 중앙에 있지 않다면 detecting 변수 true로 변경
+> **`[2000~4000]`:** 표식의 위치가 중앙에 있지 않다면 detecting 변수 true로 변경
 > 
 > <img src="image/p1_4_4.png" width="650" height="250"/>
 > 
@@ -126,16 +131,16 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > 
 > ```matlab
 > if (detecting)
->   r_lst = [sum(sum(detect_Rdot(1:fix(end/4*3), 1:end)))   % 상
->            sum(sum(detect_Rdot(fix(end/4):end, 1:end)))   % 하
->            sum(sum(detect_Rdot(1:end, 1:fix(end/3*2))))   % 좌
->            sum(sum(detect_Rdot(1:end, fix(end/3):end)))]; % 우
+>   g_lst = [sum(sum(fill_img(1:fix(end/4*3), 1:end)))   % 상
+>            sum(sum(fill_img(fix(end/4):end, 1:end)))   % 하
+>            sum(sum(fill_img(1:end, 1:fix(end/3*2))))   % 좌
+>            sum(sum(fill_img(1:end, fix(end/3):end)))]; % 우
 > ```
 > 상하 비율 비교 후 빨간색 픽셀이 더 많은 쪽으로 드론 이동 (좌우 비율 또한 동일한 원리로 작동)
 > 
 > ```matlab
-> if abs(r_lst(1) - r_lst(2)) > 100
->   if r_lst(1) >= r_lst(2) 
+> if abs(g_lst(1) - g_lst(2)) > 100
+>   if g_lst(1) >= g_lst(2) 
 >     moveup(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
 >   else
 >     movedown(droneObj,'Distance', Ddist_udlr,'WaitUntilDone', true);
