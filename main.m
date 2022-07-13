@@ -41,7 +41,7 @@ while(~findGreenDot)
         findGreenDot = true;
     elseif green_sum >= 2000
         g_center = sum(sum(fill_img(fix(end/3):fix(end/3 * 2), fix(end/3):fix(end/3 * 2))));
-        if r_center < 2000
+        if g_center < 2000
             detecting = true;
         end
     elseif green_sum >= 300
