@@ -13,7 +13,7 @@ takeoff(droneObj);
 
 
 % 1단계
-moveup(droneObj,'Distance', 0.15,'WaitUntilDone', true);
+moveup(droneObj,'Distance', 0.3,'WaitUntilDone', true);
 moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 
 findGreenDot = false;
