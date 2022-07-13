@@ -40,7 +40,7 @@ while(~findGreenDot)
         moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
         findGreenDot = true;
     elseif green_sum >= 2000
-        r_center = sum(sum(detect_Rdot(fix(end/3):fix(end/3 * 2), fix(end/3):fix(end/3 * 2))));
+        g_center = sum(sum(fill_img(fix(end/3):fix(end/3 * 2), fix(end/3):fix(end/3 * 2))));
         if r_center < 2000
             detecting = true;
         end
