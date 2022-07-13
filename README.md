@@ -181,7 +181,7 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > ```matlab
 > turn(droneObj, deg2rad(90));
 > frame = snapshot(cam);
-> r = frame(:,:,1);   detect_r = (r < 60);   
+> r = frame(:,:,1);   detect_r = (r < 50);   
 > g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
 > b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
 > detect_Brect = detect_r & detect_g & detect_b;
@@ -258,45 +258,45 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > >     end
 > > end
 > > ```
-### ⦁ 초록색 표식을 기준으로 드론의 위치를 제어하는 반복문
-> ### 1. 초록색 표식 픽셀 추출 (HSV)
+### ⦁ 보라색 표식을 기준으로 드론의 위치를 제어하는 반복문
+> ### 1. 보라색 표식 픽셀 추출 (HSV)
 > ```matlab
 > frame = snapshot(cam);
 > frame = rgb2hsv(frame);
 > 
-> h = frame(:,:,1); detect_h = (h >= 0.2) & (h <=0.42);
-> s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.65);
+> h = frame(:,:,1); detect_h = (h >= 0.67) & (h <= 0.8);
+> s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.7);
 > 
-> detect_Gdot = detect_h & detect_s;
+> detect_Pdot = detect_h & detect_s;
 >
-> canny_img = edge(detect_Gdot, 'Canny', 0.9, 8);
+> canny_img = edge(detect_Pdot, 'Canny', 0.9, 8);
 > 
 > fill_img = imfill(canny_img, 'holes');
 > ```
 > <img src="image/p2_6.png" width="700" height="250"/>
 > 
-> ### 2. 초록색 표식의 픽셀 합(green_sum)을 기준으로 드론 이동 제어
-> **`[0]`:** 후진 후 다시 초록색 표식 픽셀 추출 코드로 이동
+> ### 2. 보라색 표식의 픽셀 합(purple_sum)을 기준으로 드론 이동 제어
+> **`[0]`:** 후진 후 다시 보라색 표식 픽셀 추출 코드로 이동
 > ```matlab
-> if green_sum == 0
+> if purple_sum == 0
 >     moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
 >     continue;
 > ```
-> **`[300~2000]`:** detecting 변수 true로 변경
+> **`[300~4000]`:** detecting 변수 true로 변경
 > ```matlab
-> elseif green_sum >= 300
+> elseif purple_sum >= 300
 >     detecting = true;
 >```
-> **`[2000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
+> **`[4000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
 > ```matlab
-> elseif green_sum >= 2000
+> elseif purple_sum >= 2000
 >     turn(droneObj, deg2rad(90));
 >     moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
->     findGreenDot = true;
+>     findPurpleDot = true;
 > ```
 > ### 3. detecting == true인 경우 드론을 표식 방향으로 이동
 > 
-> 1단계와 동일하게 상하/좌우 비율 비교 후 초록색 픽셀이 더 많은 쪽으로 드론 이동
+> 1단계와 동일하게 상하/좌우 비율 비교 후  픽셀이 더 많은 쪽으로 드론 이동
 
 ## [3단계]
 ### ⦁ 드론의 높낮이 조절
