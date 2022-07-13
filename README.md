@@ -282,9 +282,9 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 >     moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
 >     continue;
 > ```
-> **`[300~4000]`:** detecting 변수 true로 변경
+> **`[600~4000]`:** detecting 변수 true로 변경
 > ```matlab
-> elseif purple_sum >= 300
+> elseif purple_sum >= 600
 >     detecting = true;
 >```
 > **`[4000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
