@@ -289,7 +289,7 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 >```
 > **`[4000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
 > ```matlab
-> elseif purple_sum >= 2000
+> elseif purple_sum >= 4000
 >     turn(droneObj, deg2rad(90));
 >     moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
 >     findPurpleDot = true;
@@ -321,7 +321,7 @@ for index=1:4
     end
 
     frame = snapshot(cam);
-    r = frame(:,:,1);   detect_r = (r < 60);   
+    r = frame(:,:,1);   detect_r = (r < 50);   
     g = frame(:,:,2);   detect_g = (g > 10) & (g < 120);
     b = frame(:,:,3);   detect_b = (b > 50) & (b < 190);
     detect_Brect = detect_r & detect_g & detect_b;
@@ -342,4 +342,4 @@ moveforward(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
 <img src="image/p2_9.png" width="650" height="450"/>
 
 ### ⦁ 링 및 표식 탐색 코드는 2단계와 동일
-보라색 표식에서 착지
+빨간색 표식에서 착지
