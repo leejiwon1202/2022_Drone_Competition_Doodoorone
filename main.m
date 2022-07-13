@@ -338,7 +338,7 @@ while(~findRedDot)
     if red_sum == 0
         moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
         continue;
-    elseif red_sum >= 2000
+    elseif red_sum >= 4000
         land(droneObj);
         findRedDot = true;
     elseif red_sum >= 300
