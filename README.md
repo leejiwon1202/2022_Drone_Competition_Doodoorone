@@ -60,8 +60,8 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 ```
 <p align="center"><img src="image/p1_2.png" width="550" height="300"/></p>
 
-### ⦁ 빨간색 표식을 기준으로 드론의 위치를 제어하는 반복문
-> ### 1. 빨간색 표식 픽셀 추출 (RGB)
+### ⦁ 초록색 표식을 기준으로 드론의 위치를 제어하는 반복문
+> ### 1. 초록색 표식 픽셀 추출 (RGB)
 > ```matlab
 > frame = snapshot(cam);
 > 
@@ -73,13 +73,13 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > ```
 > <img src="image/p1_3.png" width="800" height="300"/>
 > 
-> ### 2. 빨간색 표식의 픽셀 합(red_sum)을 기준으로 드론 이동 제어
-> **`[0]`:** 후진 후 다시 빨간색 표식 픽셀 추출 코드로 이동
+> ### 2. 초록색 표식의 픽셀 합(green_sum)을 기준으로 드론 이동 제어
+> **`[0]`:** 후진 후 다시 초록색 표식 픽셀 추출 코드로 이동
 > 
 > <img src="image/p1_4_1.png" width="300" height="200"/> 
 > 
 > ```matlab
-> if red_sum == 0
+> if green_sum == 0
 >   moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
 >   continue;
 > ```
@@ -94,7 +94,7 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > <img src="image/p1_4_3.png" width="300" height="200"/>
 > 
 > ```matlab
-> elseif red_sum >= 300
+> elseif green_sum >= 300
 >   detecting = true;
 > ```
 > 
@@ -103,22 +103,22 @@ moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
 > <img src="image/p1_4_4.png" width="650" height="250"/>
 > 
 > ```matlab
-> elseif red_sum >= 2000
+> elseif green_sum >= 2000
 >   r_center = sum(sum(detect_Rdot(fix(end/3):fix(end/3 * 2), fix(end/3):fix(end/3 * 2))));
 >   if r_center < 2000
 >     detecting = true;
 >   end
 > ```
 > 
-> **`[3000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
+> **`[4000~]`:** 90° turn → 1.2m 전진 → 반복문 탈출
 > 
 > <img src="image/p1_4_5.png" width="300" height="200"/>
 > 
 > ```matlab
-> elseif red_sum >= 3000
+> elseif green_sum >= 4000
 >   turn(droneObj, deg2rad(90));
 >   moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
->   findRedDot = true;
+>   findGreenDot = true;
 > ```
 > 
 >
