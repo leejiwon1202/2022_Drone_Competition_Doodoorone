@@ -168,8 +168,8 @@ moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
 while(~findPurpleDot)
     frame = snapshot(cam);
     frame = rgb2hsv(frame);
-    h = frame(:,:,1); detect_h = (h >= 0.65) & (h <= 0.8);
-    s = frame(:,:,2); detect_s = (s >= 0.3) & (s <= 0.85);
+    h = frame(:,:,1); detect_h = (h >= 0.67) & (h <= 0.8);
+    s = frame(:,:,2); detect_s = (s >= 0.1) & (s <= 0.7);
     detect_Pdot = detect_h & detect_s;
     canny_img = edge(detect_Pdot, 'Canny', 0.9, 9);
     fill_img = imfill(canny_img, 'holes');
