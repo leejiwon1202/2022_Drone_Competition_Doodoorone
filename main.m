@@ -119,7 +119,7 @@ while(~findRightPos)
     if((ratio1 >= 0.7) && (ratio2 >= 0.7))
         movedown(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
         height = height - 0.4;
-        moveforward(droneObj, 'Distance', 0.5, 'WaitUntilDone', true);
+        moveforward(droneObj, 'Distance', 0.8, 'WaitUntilDone', true);
         findRightPos = true;
     else
         b_center = sum(sum(detect_Brect(fix(end/3):fix(end/3 * 2), fix(end/3):fix(end/3 * 2))));
@@ -284,7 +284,7 @@ while(~findRightPos)
     
     if((ratio1 >= 0.7) && (ratio2 >= 0.7))
         movedown(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
-        moveforward(droneObj, 'Distance', 0.5, 'WaitUntilDone', true);
+        moveforward(droneObj, 'Distance', 0.8, 'WaitUntilDone', true);
         findRightPos = true;
     else
         b_center = sum(sum(detect_Brect(fix(end/3):fix(end/3 * 2), fix(end/3):fix(end/3 * 2))));
