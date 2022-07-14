@@ -320,7 +320,7 @@ while(~findRightPos)
 end
 
 findRedDot = false;
-moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
+moveforward(droneObj, 'Distance', 0.2, 'WaitUntilDone', true);
 while(~findRedDot)
     frame = snapshot(cam);
     r = frame(:,:,1);   detect_r = (r > 80) & (r < 200);
