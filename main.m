@@ -362,6 +362,6 @@ while(~findRedDot)
     end
     
     if (~findRedDot)
-        moveforward(droneObj, 'Distance', dist_forward, 'WaitUntilDone', true);
+        moveforward(droneObj, 'Distance', 0.2, 'WaitUntilDone', true);
     end
 end
