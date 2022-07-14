@@ -177,8 +177,7 @@ while(~findPurpleDot)
         moveback(droneObj,'Distance', dist_backward,'WaitUntilDone', true);
         continue;
     elseif purple_sum >= 4000
-        turn(droneObj, deg2rad(90));
-        moveforward(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
+        moveright(droneObj, 'Distance', dist_pass, 'WaitUntilDone', true);
         findPurpleDot = true;
     elseif purple_sum >= 600
         detecting = true;
@@ -212,17 +211,16 @@ while(~findPurpleDot)
     end
 end
 
-
+turn(droneObj, deg2rad(120));
 % 3단계
 if height <= 0.75
     moveup(droneObj,'Distance', 0.7,'WaitUntilDone', true);
 end
-turn(droneObj, deg2rad(30));
 
 max_sum = 0;
-for index=1:4
+for index=1:7
     if index > 1
-        turn(droneObj, deg2rad(10));
+        turn(droneObj, deg2rad(5));
     end
 
     frame = snapshot(cam);
@@ -237,7 +235,7 @@ for index=1:4
         max_index = index;
     end
 end
-turn_radi = (-1) * 10 * (4 - max_index);
+turn_radi = (-1) * 5 * (7 - max_index);
 turn(droneObj, deg2rad(turn_radi));
 moveforward(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
 
