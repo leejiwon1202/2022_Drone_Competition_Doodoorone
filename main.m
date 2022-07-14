@@ -281,8 +281,8 @@ while(~findRightPos)
     ratio2 = min(B_lst(3), B_lst(4)) / max(B_lst(3), B_lst(4));
     
     if((ratio1 >= 0.7) && (ratio2 >= 0.7))
-        movedown(droneObj, 'Distance', 0.4, 'WaitUntilDone', true);
-        moveforward(droneObj, 'Distance', Rdist_add_forward, 'WaitUntilDone', true);
+        movedown(droneObj, 'Distance', 0.5, 'WaitUntilDone', true);
+        moveforward(droneObj, 'Distance', 1.2, 'WaitUntilDone', true);
         findRightPos = true;
     else
         b_center = sum(sum(detect_Brect(fix(end/3):fix(end/3 * 2), fix(end/3):fix(end/3 * 2))));
