@@ -338,7 +338,7 @@ while(~findRedDot)
     elseif red_sum >= 4000
         land(droneObj);
         findRedDot = true;
-    elseif red_sum >= 300
+    elseif red_sum >= 600
         detecting = true;
     end
 
